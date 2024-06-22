@@ -26,7 +26,7 @@ const geo = new THREE.IcosahedronGeometry(1.0,2);
 
 //adding a new material
 const material = new THREE.MeshBasicMaterial({
-    color:"red"
+    color:"biege"
 });
 
 //we are meshing it 
@@ -34,5 +34,11 @@ const mesh = new THREE.Mesh(geo,material);
 
 scene.add(mesh);
 
+// we adding the function animate
+function animate(t = 0){
+    requestAnimationFrame(animate);
+    mesh.scale.setScalar(Math.cos(t * 0.001) + 1.0);
+    renderer.render(scene,camera);
+}
 
-renderer.render(scene,camera);
+animate();
