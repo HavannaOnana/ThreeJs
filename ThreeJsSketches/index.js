@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "jsm/controls/OrbitControls.js";
+import  getStarfield  from "./src/getStarfield.js"
 
 // making a renderer
 const renderer= new THREE.WebGLRenderer({antialias : true});
@@ -10,7 +11,7 @@ document.body.appendChild(renderer.domElement);
 let fov = 75;
 const aspect = window.innerWidth / window.innerHeight;
 const near = 0.1;
-const far = 10;
+const far = 20;
 
 //setting the camera
 const camera = new THREE.PerspectiveCamera(fov,aspect,near,far);
@@ -32,15 +33,21 @@ const material = new THREE.MeshStandardMaterial({
     map : loader.load("./textures/earth.jpg")
 });
 
+//making a erthgroup
+const Earthgroup= new THREE.Group();
+Earthgroup.rotation.z = -23.4 * Math.PI / 180;
+scene.add(Earthgroup);
 
 //we are meshing it 
 const earthMesh = new THREE.Mesh(geo,material);
+Earthgroup.add(earthMesh);
 
-scene.add(earthMesh);
+const stars = getStarfield({numStars: 5000});
+scene.add(stars)
+
 //making a new light hemilight
 const light = new THREE.HemisphereLight();
 scene.add(light);
-
 
 
 
